@@ -7,7 +7,8 @@ ORDERS_FILE = "data/orders.json"
 
 class Order:
 
-    def __init__(self):
+    def __init__(self, customer):
+        self.customer = customer
         self.cart = []
         self.total = 0
     
@@ -17,6 +18,10 @@ class Order:
             return json.load(file)
 
     def add_to_cart(self):
+
+        if not self.customer.logged_in_user:
+            print("Please login first.")
+            return
 
         menu = self.load_menu()
 
@@ -54,11 +59,16 @@ class Order:
 
     def place_order(self):
 
+        if not self.customer.logged_in_user:
+            print("Please login first.")
+            return
+
         if not self.cart:
             print("Cannot place empty order.")
             return
         
         order_data = {
+            "user": self.customer.logged_in_user,
             "order_id": str(uuid.uuid4()),
             "items": self.cart,
             "total": self.total,

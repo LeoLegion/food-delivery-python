@@ -1,19 +1,27 @@
 from menu import display_menu, add_food_item, search_food
 from order import Order
+from customer import Customer
 
-order = Order()
+customer = Customer()
+order = Order(customer)
 
 def show_options():
 
     print("\n===== FOOD DELIVERY APP =====")
 
-    print("1. Display Menu")
-    print("2. Add Food Item")
-    print("3. Search Food")
-    print("4. Add to Cart")
-    print("5. View Cart")
-    print("6. Place Order")
-    print("7. Exit")
+    if customer.logged_in_user:
+        print(f"Logged in as: {customer.logged_in_user}")
+
+    print("1. Register")
+    print("2. Login")
+    print("3. Display Menu")
+    print("4. Add Food Item")
+    print("5. Search Food")
+    print("6. Add to Cart")
+    print("7. View Cart")
+    print("8. Place Order")
+    print("9. Logout")
+    print("10. Exit")
 
 
 def main():
@@ -25,25 +33,34 @@ def main():
         choice = input("Enter your choice: ")
 
         if choice == "1":
-            display_menu()
+            customer.register()
         
         elif choice == "2":
-            add_food_item()
-        
+            customer.login()
+
         elif choice == "3":
+            display_menu()
+        
+        elif choice == "4":
+            add_food_item()
+
+        elif choice == "5":
             search_food()
 
-        elif choice == "4":
+        elif choice == "6":
             display_menu()
             order.add_to_cart()
         
-        elif choice == "5":
+        elif choice == "7":
             order.view_cart()
 
-        elif choice == "6":
+        elif choice == "8":
             order.place_order()
         
-        elif choice == "7":
+        elif choice == "9":
+            customer.logout()
+        
+        elif choice == "10":
             print("Thank you for using the app.")
             break
         
